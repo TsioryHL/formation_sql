@@ -1,0 +1,24 @@
+{
+  "name": "formation_sql",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node browser-sync-config.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TsioryHL/formation_sql.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TsioryHL/formation_sql/issues"
+  },
+  "homepage": "https://github.com/TsioryHL/formation_sql#readme",
+  "description": "",
+  "devDependencies": {
+    "browser-sync": "^3.0.3"
+  }
+}

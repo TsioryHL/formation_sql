@@ -32,5 +32,20 @@ class PartenaireController{
             die('Erreur lors de la requete select: ' . $e->getMessage());
         }
     }
+
+    public function update($idpartenaire,$nom,$description){
+        try {
+            $sql = "UPDATE partenaire set nom = :nom , description = :description WHERE idpartenaire = :idpartenaire";
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->bindParam(':nom', $nom);
+            $stmt->bindParam(':description', $description);
+            $stmt->bindParam(':idpartenaire', $idpartenaire);
+            $stmt->execute();
+            return true; // Renvoie true si l'insertion réussie
+        } catch (Exception $e) {
+            // Gestion des erreurs
+            die('Erreur lors de l\'insertion : ' . $e->getMessage());
+        }
+    }
 }
 ?>
