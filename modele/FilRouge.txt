@@ -1,0 +1,98 @@
+CREATE TABLE partenaire(
+   idpartenaire INT AUTO_INCREMENT,
+   nom VARCHAR(50)  NOT NULL,
+   description VARCHAR(50) ,
+   PRIMARY KEY(idpartenaire)
+);
+
+CREATE TABLE specialite(
+   idspecialite INT AUTO_INCREMENT,
+   intitule VARCHAR(50)  NOT NULL,
+   PRIMARY KEY(idspecialite)
+);
+
+CREATE TABLE tache(
+   idtache INT AUTO_INCREMENT,
+   num INT NOT NULL,
+   nom VARCHAR(50) ,
+   debut DATE NOT NULL,
+   fin DATE,
+   PRIMARY KEY(idtache)
+);
+
+CREATE TABLE membre(
+   idmembre INT AUTO_INCREMENT,
+   prenom VARCHAR(50)  NOT NULL,
+   nom VARCHAR(50) ,
+   idspecialite INT,
+   PRIMARY KEY(idmembre),
+   FOREIGN KEY(idspecialite) REFERENCES specialite(idspecialite)
+);
+
+CREATE TABLE projet(
+   idprojet INT AUTO_INCREMENT,
+   num INT NOT NULL,
+   nom VARCHAR(50) ,
+   debut DATE,
+   fin DATE,
+   idmembre INT NOT NULL,
+   idspecialite INT NOT NULL,
+   PRIMARY KEY(idprojet),
+   FOREIGN KEY(idmembre) REFERENCES membre(idmembre),
+   FOREIGN KEY(idspecialite) REFERENCES specialite(idspecialite)
+);
+
+CREATE TABLE sprint(
+   idprojet INT,
+   idsprint INT AUTO_INCREMENT,
+   num INT,
+   description VARCHAR(50) ,
+   debut DATE,
+   fin DATE,
+   PRIMARY KEY(idprojet, idsprint),
+   FOREIGN KEY(idprojet) REFERENCES projet(idprojet)
+);
+
+CREATE TABLE evenemt(
+   idevenement INT AUTO_INCREMENT,
+   _date DATE,
+   description VARCHAR(50) ,
+   type_action VARCHAR(50) ,
+   type_element VARCHAR(50) ,
+   idtache INT NOT NULL,
+   idprojet INT NOT NULL,
+   idsprint INT NOT NULL,
+   idmembre INT NOT NULL,
+   PRIMARY KEY(idevenement),
+   FOREIGN KEY(idtache) REFERENCES tache(idtache),
+   FOREIGN KEY(idprojet, idsprint) REFERENCES sprint(idprojet, idsprint),
+   FOREIGN KEY(idmembre) REFERENCES membre(idmembre)
+);
+
+CREATE TABLE estAssocie(
+   idprojet INT,
+   idpartenaire INT,
+   role VARCHAR(50) ,
+   PRIMARY KEY(idprojet, idpartenaire),
+   FOREIGN KEY(idprojet) REFERENCES projet(idprojet),
+   FOREIGN KEY(idpartenaire) REFERENCES partenaire(idpartenaire)
+);
+
+CREATE TABLE participe(
+   idtache INT,
+   idmembre INT,
+   fonction VARCHAR(50) ,
+   PRIMARY KEY(idtache, idmembre),
+   FOREIGN KEY(idtache) REFERENCES tache(idtache),
+   FOREIGN KEY(idmembre) REFERENCES membre(idmembre)
+);
+
+CREATE TABLE backlog(
+   idtache INT,
+   idprojet INT,
+   idsprint INT,
+   status VARCHAR(50) ,
+   PRIMARY KEY(idtache, idprojet, idsprint),
+   FOREIGN KEY(idtache) REFERENCES tache(idtache),
+   FOREIGN KEY(idprojet, idsprint) REFERENCES sprint(idprojet, idsprint)
+);
